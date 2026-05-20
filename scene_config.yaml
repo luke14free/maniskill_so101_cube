@@ -1,0 +1,58 @@
+# Real-world measurements for the cube-in-bin scene (meters)
+# Robot-base frame: +X forward (away from operator), +Y left, +Z up.
+
+robot:
+  base_pose: [0.50, 0.0, 0.0]      # 5cm further back (at the table edge)
+  base_yaw_deg: 270.0              # rotated 180° from previous (was 90°)
+  rest_qpos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]   # base/home pose (all joints zero)
+
+table:
+  size: [1.0, 0.7, 0.04]
+  top_z: 0.0
+  color: [0.45, 0.30, 0.20]      # reverted to wood brown
+
+# Mat rotated 90° (swapped width/depth)
+mat:
+  center: [0.22, 0.05]
+  size: [0.30, 0.40, 0.003]
+  color: [0.06, 0.06, 0.06]
+
+bin:
+  position: [0.15, 0.18]
+  diameter: 0.180                  # 18 cm wide
+  height:   0.150                  # 15 cm tall
+  wall_thickness: 0.003            # 3 mm cardboard
+  n_segments: 48                   # polygon approx of the cylinder
+  color: [0.78, 0.58, 0.36]        # outer tan
+  inner_color: [0.55, 0.40, 0.25]  # slightly darker inside (the bottom sheet/shadow)
+
+# cube intentionally omitted — set show_cube: false
+show_cube: false
+cube:
+  position: [0.28, -0.08]
+  size: 0.030
+  color: [0.93, 0.90, 0.70]
+
+# A red "room": back wall + ceiling + side walls so every gray patch the camera
+# sees behind the scene becomes red.
+backdrop:
+  color: [0.45, 0.05, 0.07]
+  walls:
+    # back wall (high +X)
+    - { center: [2.00,  0.0,  1.00], size: [0.02, 6.0, 4.0] }
+    # ceiling
+    - { center: [0.00,  0.0,  2.00], size: [6.0,  6.0, 0.02] }
+    # left wall (+Y)
+    - { center: [0.00,  3.00, 1.00], size: [6.0,  0.02, 4.0] }
+    # right wall (-Y)
+    - { center: [0.00, -3.00, 1.00], size: [6.0,  0.02, 4.0] }
+    # floor (just below the table)
+    - { center: [0.00,  0.0, -0.05], size: [6.0,  6.0, 0.02] }
+
+# Camera: in front of the table (-X), elevated, looking down/back at the mat center.
+# +Y = operator's left → bin (at +Y) appears LEFT in frame, robot (at origin) appears RIGHT.
+camera_scene:
+  position: [-0.50, -0.15, 0.50]  # in front, slightly to operator's right, elevated 50cm
+  target:   [0.25,  0.05, 0.08]   # pan down a bit (was 0.15, started at 0.04)
+  fov_deg:  30                    # between 27° and 33°
+  resolution: [1280, 720]

@@ -1,0 +1,4 @@
+mani-skill
+pyyaml
+pillow
+transforms3d
